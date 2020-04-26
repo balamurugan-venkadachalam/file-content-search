@@ -80,11 +80,6 @@ public class FolderSearchServiceImpl implements FolderSearchService {
             doc.add(new StringField("path", file.toString(), Field.Store.YES));
             doc.add(new LongPoint("modified", lastModified));
             doc.add(new TextField("contents", new String(Files.readAllBytes(file)), Field.Store.YES));
-
-            //Updates a document by first deleting the document(s)
-            //containing <code>term</code> and then adding the new
-            //document.  The delete and then add are atomic as seen
-            //by a reader on the same index
             writer.updateDocument(new Term("path", file.toString()), doc);
         }
     }
